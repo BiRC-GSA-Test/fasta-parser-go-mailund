@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"birc.au.dk/gsa/fasta"
 )
 
 func main() {
@@ -18,5 +20,7 @@ func main() {
 	}
 	defer f.Close()
 
-	fmt.Println("I should be processing the input file now!")
+	fasta.MapFasta(f, func(name, seq string) {
+		fmt.Printf("%s\t%s\n", name, seq)
+	})
 }
