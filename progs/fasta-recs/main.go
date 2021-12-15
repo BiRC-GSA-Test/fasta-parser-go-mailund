@@ -15,12 +15,16 @@ func main() {
 
 	f, err := os.Open(os.Args[1])
 	if err != nil {
-		fmt.Fprintf(os.Stderr, err.Error())
+		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 	defer f.Close()
 
-	fasta.MapFasta(f, func(name, seq string) {
+	err = fasta.MapFasta(f, func(name, seq string) {
 		fmt.Printf("%s\t%s\n", name, seq)
 	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
